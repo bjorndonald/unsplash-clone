@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import 'primeicons/primeicons.css';
-import { ref } from 'vue';
 
-const searchText = ref("");
+const onSubmit = (submitEvent: Event) => {
+    const form = submitEvent.target as HTMLFormElement;
+    const formData = new FormData(form);
+    window.location.href = "/?search=" + formData.get("searchText")
+}
+
 </script>
 
 <template>
-    <form>
+    <form @submit.prevent="onSubmit">
         <i class="icon pi pi-search"></i>
-        <input type="text" name="searchText" id="searchText">
+        <input placeholder="Search for photo" type="text" name="searchText" id="searchText">
     </form>
 </template>
 
@@ -16,10 +20,11 @@ const searchText = ref("");
 form {
     background-color: white;
     width: 100%;
+    height: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 0px 16px 12px;
+    gap: 16px;
+    padding: 16px 0px 16px 16px;
     border-radius: 5px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     box-shadow: 0;
@@ -32,6 +37,8 @@ form {
     input {
         appearance: none;
         border: none;
+        height: 100%;
+        font-size: 16px;
         outline: none;
         background-color: transparent;
         flex-grow: 1;

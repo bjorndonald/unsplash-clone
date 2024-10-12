@@ -2,10 +2,12 @@ import Photo from "~/types/photo"
 import fs from "node:fs/promises";
 import { getPlaiceholder } from "plaiceholder";
 
-export const getBase64 = async (imgPath: string) => {
+export const getBase64 = async (src: string) => {
     try {
-        const file = await fs.readFile(`public/${imgPath}`)
-        const { base64 } = await getPlaiceholder(file)
+        const buffer = await fetch(src).then(async (res) =>
+            Buffer.from(await res.arrayBuffer())
+        );
+        const { base64 } = await getPlaiceholder(buffer)
         return base64
     } catch (error: unknown) {
         //error handling
@@ -17,24 +19,39 @@ export const getBase64 = async (imgPath: string) => {
     }
 }
 
+interface Response {
+    results: Photo[]
+    total: number
+    total_pages: number
+}
+
 export default defineEventHandler(async (event) => {
     const {apiUrl, accessKey} = useRuntimeConfig()
-    
+    const { search } = getQuery(event);
     try {
-        const data = await $fetch<Photo[]>(`${apiUrl}/search/photos/`, {
+        var data = await $fetch<Response>(`${apiUrl}/search/photos`, {
             method: "get",
             params: {
                 client_id: accessKey,
-                query: "africa,",
-                page: 1
+                query: search,
+                page: 1,
+                per_page: 14
             }
         })
-       
+        const photos = data.results.map(async (x) => {
+            const placeholder = await getBase64(x.urls.regular)
+            return ({
+                ...x,
+                placeholder
+            })
+        })
+        
+        const results = await Promise.all(photos)
+        const response = {...data, results}
 
-        return data
+       
+        return response
     } catch (error) {
-        console.log(error)
        throw error
     }
-    
 })

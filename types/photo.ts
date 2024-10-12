@@ -1,8 +1,14 @@
 export default interface Photo {
-    width: 4000,
-    height: 3000,
+    id: string
+    width: number,
+    height: number,
     color: string,
     description: string,
+    placeholder?: string,
+    location?: {
+        city: string,
+        country: string,
+    },
     user: {
         name: string,
     },
