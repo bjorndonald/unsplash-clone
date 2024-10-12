@@ -43,9 +43,11 @@ const openModal = (photo: Photo) => {
             margin: -40px auto 0 auto;
             display: grid;
             gap: 2rem;
+            
             grid-template-columns: 1fr;
     
             .photo-grid {
+                padding: 0 1rem;
                 display: flex;
                 flex-direction: column;
                 gap: 2rem;

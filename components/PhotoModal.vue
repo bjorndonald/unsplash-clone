@@ -60,27 +60,27 @@ const emit = defineEmits(['closeModal'])
 
     .modal-body {
         padding: 5rem 0;
-        width: 100%;
+        width: calc(100% - 2rem);
         max-width: 425px;
         position: relative;
 
         .modal-close {
             cursor: pointer;
             position: absolute;
-            top: 1rem;
-            right: -4rem;
+            top: 2rem;
+            right: 0rem;
             
             color: white;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 476px) {
             .modal-close {
                 top: 2rem;
                 right: -4rem;
             }
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 1025px) {
             .modal-close {
                 top: 2rem;
                 right: -4rem;
@@ -132,12 +132,14 @@ const emit = defineEmits(['closeModal'])
 
         @media (min-width: 768px) {
             .modal-body {
+                width: 100%;
                 max-width: 464px;
             }
         }
     
-        @media (min-width: 1024px) {
+        @media (min-width: 1025px) {
             .modal-body {
+                width: 100%;
                 max-width: 624px;
             }
         }

@@ -14,10 +14,10 @@ if (!!error.value) {
 
     <header>
         <div>
-            <Searchbar v-if="status==='success' &&!route.query.search" />
+            <Searchbar v-if="status === 'success' && !route.query.search" />
             <h1 v-if="status === 'pending'">Searching for <span>“{{ route.query.search }}”</span>
             </h1>
-            <h1 v-if="status === 'success'&& !!route.query.search">Search Results for <span>“{{ route.query.search
+            <h1 v-if="status === 'success' && !!route.query.search">Search Results for <span>“{{ route.query.search
                     }}”</span>
             </h1>
         </div>
@@ -53,16 +53,16 @@ header {
         }
     }
 
-        @media (min-width: 1024px) {
-            h1 {
-                text-align: left;
-            }
+    @media (min-width: 1024px) {
+        h1 {
+            text-align: left;
         }
+    }
 
     div {
-        padding: 0 1rem;
-        width: 100%;
         
+        width: 100%;
+
         height: 100%;
         margin: 0 auto;
         display: flex;
@@ -72,14 +72,20 @@ header {
 
     @media (min-width: 768px) {
         div {
+            
             max-width: 768px;
         }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1025px) {
         div {
+            padding: 0 1rem;
             max-width: 1024px;
         }
     }
+}
+
+.content{
+    padding-bottom: 2rem;
 }
 </style>

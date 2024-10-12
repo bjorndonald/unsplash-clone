@@ -19,7 +19,7 @@ const onSubmit = (submitEvent: Event) => {
 <style lang="scss" scoped>
 form {
     background-color: white;
-    width: 100%;
+    width: calc(100% - 4rem);
     height: 1.5rem;
     display: flex;
     align-items: center;
@@ -42,6 +42,12 @@ form {
         background-color: transparent;
         flex-grow: 1;
 
+    }
+}
+
+@media (min-width: 1024px) {
+    form {
+        width: 100%;
     }
 }
 </style>
