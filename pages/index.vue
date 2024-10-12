@@ -1,7 +1,9 @@
 <script setup>
+import { reactive } from 'vue'
+
 const route = useRoute()
 
-const { data, error } = await useFetch('/api/photo?search=' + route.query.search ?? "")
+const { data, status, error } = await useFetch('/api/photo?search=' + route.query.search ?? "")
 if (!!error.value) {
     throw createError({ statusCode: 500, message: "The seems to be a problem" })
 }
@@ -9,29 +11,20 @@ if (!!error.value) {
 </script>
 
 <template>
+
     <header>
         <div>
-            <Searchbar v-if="!route.query.search" />
-            <h1 v-if="!!route.query.search">Search Results for <span>"{{ route.query.search }}"</span>
+            <Searchbar v-if="status==='success' &&!route.query.search" />
+            <h1 v-if="status === 'pending'">Searching for <span>“{{ route.query.search }}”</span>
+            </h1>
+            <h1 v-if="status === 'success'&& !!route.query.search">Search Results for <span>“{{ route.query.search
+                    }}”</span>
             </h1>
         </div>
     </header>
     <div class="content">
-        <div class="grids">
-            <div class="photo-grid">
-                <Photo :photo="data.results[0]" />
-                <Photo v-for="photo in data.results.filter((x, i) => (i + 1) % 4 === 0)" :photo="photo" />
-            </div>
-            <div class="photo-grid">
-                <Photo :photo="data.results[1]" />
-                <Photo v-for="photo in data.results.filter((x, i) => (i + 1) % 5 === 0)" :photo="photo" />
-            </div>
-            <div class="photo-grid">
-                <Photo :photo="data.results[2]" />
-                <Photo v-for="photo in data.results.filter((x, i) => (i + 1) % 6 === 0)" :photo="photo" />
-            </div>
-        </div>
-
+        <Loading v-if="status === 'pending'" />
+        <PhotoGrid v-if="status === 'success'" :photos="data.results" />
     </div>
 </template>
 
@@ -46,23 +39,30 @@ header {
 
     background-color: #DDE3EA;
 
-    h1{
+    h1 {
         width: 100%;
-        text-align: left;
+        text-align: center;
         font-family: "roboto";
         font-size: 40px;
         line-height: 1.2;
-        font-weight: 700;
+        font-weight: 500;
         color: #25385D;
 
-        span{
+        span {
             color: #6C7B8F;
         }
     }
 
+        @media (min-width: 1024px) {
+            h1 {
+                text-align: left;
+            }
+        }
+
     div {
         padding: 0 1rem;
         width: 100%;
+        
         height: 100%;
         margin: 0 auto;
         display: flex;
@@ -76,40 +76,10 @@ header {
         }
     }
 
-        @media (min-width: 1024px) {
-            div {
-                max-width: 1024px;
-            }
-        }
-}
-
-
-
-.content {
-    .grids {
-        max-width: 835px;
-        margin: -40px auto 0 auto;
-        display: grid;
-        gap: 2rem;
-        grid-template-columns: 1fr;
-
-        .photo-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+    @media (min-width: 1024px) {
+        div {
+            max-width: 1024px;
         }
     }
-
-    @media (min-width: 768px) {
-        .grids {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-        @media (min-width: 1024px) {
-            .grids {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-        }
 }
 </style>

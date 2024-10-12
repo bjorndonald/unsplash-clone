@@ -2,6 +2,7 @@
 import 'primeicons/primeicons.css';
 import type Photo from '~/types/photo';
 
+const emit = defineEmits(['openModal'])
 const { photo } = defineProps<{
     photo: Photo
 }>()
@@ -11,20 +12,24 @@ if (!!error.value) {
     throw createError({ statusCode: 500, message: "The seems to be a problem" })
 }
 
+function handleClick() {
+    if (!!data.value) { 
+        emit('openModal', data.value) 
+    }
+}
+
 </script>
 
 <template>
-    <div class="photo">
+    <div @click="handleClick" class="photo">
         <div :style="{ width: '100%', aspectRatio: photo.width / photo.height }"></div>
-        <NuxtImg v-if="!!data" class="img" loading="lazy" :style="{ aspectRatio: photo.width / photo.height }"
+        <NuxtImg class="placeholder" :style="{ aspectRatio: photo.width / photo.height }"
+            :src="photo.placeholder" />
+        <NuxtImg class="img" loading="lazy" :style="{ aspectRatio: photo.width / photo.height }"
             :src="photo.urls.regular" />
-        <div v-if="!data" class="skeleton">
-            <div></div>
-            <div></div>
-        </div>
-        <div v-if="!!data" class="overlay">
-            <h4 v-if="!!data">{{ photo.user.name }}</h4>
-            <h6 v-if="!!data">{{ !!data?.location?.city ? data?.location?.city + "," : "" }}{{ " " +
+        <div class="overlay">
+            <h4>{{ photo.user.name }}</h4>
+            <h6>{{ !!data?.location?.city ? data?.location?.city + "," : "" }}{{ " " +
                 (data?.location?.country ?? "") }}</h6>
         </div>
     </div>
@@ -37,6 +42,7 @@ if (!!error.value) {
     position: relative;
     height: min-content;
     overflow: hidden;
+    cursor: zoom-in;
     border-radius: 0.5rem;
 
     img {
@@ -65,27 +71,7 @@ if (!!error.value) {
         z-index: 3;
     }
 
-    .skeleton {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: flex-end;
-        flex-direction: column;
-        padding: 0 1rem 0 1rem;
-        gap: 4px;
-
-        div:first-child {
-            width: 200px;
-            background-color: #E7E7E7;
-            height: 16px;
-        }
-
-        div:last-child {
-            width: 140px;
-            background-color: #E7E7E7;
-            height: 16px;
-        }
-    }
+    
 
     .overlay {
         position: absolute;
