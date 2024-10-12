@@ -61,7 +61,7 @@ const openModal = (photo: Photo) => {
             }
         }
     
-        @media (min-width: 1024px) {
+        @media (min-width: 1025px) {
             .grids {
                 max-width: 924px;
                 grid-template-columns: 1fr 1fr 1fr;

@@ -1,75 +1,22 @@
-# Nuxt 3 Minimal Starter
+# Unsplash Clone Built with NuxtJS
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
+This is a simple project which takes advantage of the server rendering of NuxtJS and scoped SCSS. There is a focus on making the project lightweight and simple. Uses as much html as possible to avoid relying two much on javascript.
 
 ```bash
-# npm
-npm install
+# install dependencies
+$ npm install
 
-# pnpm
-pnpm install
+# serve with hot reload at localhost:3000
+$ npm dev
 
-# yarn
-yarn install
-
-# bun
-bun install
+# build for production and launch server
+$ npm build
+$ npm start
 ```
 
-## Development Server
+## Live Demo
+There is an online demo [here](https://unsplash-clone-ten.vercel.app/)
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+<img src="./screenshots/screencapture-localhost-3000-2024-10-12-17_43_08.png">
+<img src="./screenshots/screencapture-localhost-3000-2024-10-12-17_46_06.png">
+<img src="./screenshots/Screenshot 2024-10-12 at 5.44.37 PM.png">
